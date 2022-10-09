@@ -29,7 +29,7 @@ namespace Crossout.AspWeb
                 options.Level = System.IO.Compression.CompressionLevel.Fastest);
             services.AddResponseCompression(options =>
             {
-                options.EnableForHttps = true;
+                options.EnableForHttps = false;
                 options.Providers.Add<GzipCompressionProvider>();
                 options.Providers.Add<BrotliCompressionProvider>();
             });
@@ -54,20 +54,11 @@ namespace Crossout.AspWeb
             else
             {
                 app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
-
-            // Enable gzip compression
-            // ONLY KEEP ENABLED IF _NO_ SENSITIVE DATA IS TRANSFERED
             app.UseResponseCompression();
-
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -66,6 +66,25 @@ Then create the settings file in %appdata%/CrossoutWeb/WebSettings.json or start
 
 You may need to start Visual Studio as Administrator for Nancy or Owins Selfhost to work.
 
+## Using docker instead
+
+You will need to install:
+
+* Visual Studio with .NET 4.6 (to compile the app, this step hasn't been dockerized ***yet***)
+* Docker
+* Docker Compose
+
+### Steps
+1. Compile the project by running `dotnet publish -c Release -o out` in the Crossout.AspWeb folder
+2. Build the image with the tag **crossout/web** by running `docker build . -t crossout/web` in the root folder
+3. Copy the file `.env.example` to `.env` and edit it to your liking
+4. Create a folder `config` and create the file `WebSettings.json` within it as stated in the previous section above.
+5. Run the mysql container only using `docker-compose up -d mysql`
+6. Connect to the database using the credentials you used in the step 3 to import the `/Schema/crossout_structure_and_data_no_market.sql` file.
+7. Run the web service using `docker-compose up -d web`
+
+> Please note that once you did the step 6, you can skip step 5, 6 and 7 just by running `docker-compose up -d`.
+
 CrossoutDB API
 ===
 Our api provides all data we have gathered so far, in an easy to use form.

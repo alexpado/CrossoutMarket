@@ -1,0 +1,30 @@
+﻿version: '3'
+services:
+  web:
+    image: crossout/web
+    env_file:
+      - .env
+    volumes:
+      - './config:/root/.config/CrossoutWeb'
+    ports:
+      - "${HOST_HTTP_PORT:-5000}:${CLIENT_HTTP_PORT:-5000}"
+    links:
+      - mysql
+  mysql:
+    image: mysql:5.7
+    env_file:
+      - .env
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: "${DB_PASSWORD}"
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - 'xodb-mysql:/var/lib/mysql'
+
+volumes:
+  xodb-mysql:
+    driver: local

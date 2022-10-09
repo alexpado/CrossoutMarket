@@ -305,3 +305,7 @@ $RECYCLE.BIN/
 # SQL Queries
 Crossout.Web/SQL/
 Crossout.Toolkit/Data/Shared/items.json
+
+# Dockerised
+config/
+.env
